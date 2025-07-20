@@ -19,8 +19,8 @@ def get_files_with_tags(tags, folder_path):
         if file.endswith(".amdf"):
             with open(file) as f:
                 f_lines = f.readlines()
-                f_tags = f_lines[1].strip().split(",")
-                print(f_tags)
+                f_tags = [t.strip().lower() for t in f_lines[1].strip().split(',')]
+                print(str(f_tags) + " | " + str(tags))
                 if any([tag in f_tags for tag in tags]):
                     result.append(file)
     return result

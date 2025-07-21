@@ -1,5 +1,6 @@
+# open sauce? what sauce? ohhh "The sauce"
+
 import os
-import sys
 from pathlib import Path
 
 def get_files_with_tags(tags, folder_path):
@@ -20,7 +21,10 @@ def get_files_with_tags(tags, folder_path):
         if file.endswith(".amdf"):
             with open(file) as f:
                 f_lines = f.readlines()
-                f_tags = [t.strip().lower() for t in f_lines[1].strip().split(',')]
+                try:
+                    f_tags = [t.strip().lower() for t in f_lines[1].strip().split(',')]
+                except:
+                    f_tags = []
                 if any([tag in f_tags for tag in tags]):
                     true_file = file.replace(".amdf", "")
                     result.append(true_file)
@@ -44,13 +48,11 @@ def get_files_with_authors(authors, folder_path):
         if file.endswith(".amdf"):
             with open(file) as f:
                 f_lines = f.readlines()
-                f_authors = [t.strip().lower() for t in f_lines[2].strip().split(',')]
+                try:
+                    f_authors = [t.strip().lower() for t in f_lines[2].strip().split(',')]
+                except:
+                    f_authors = []
                 if any([tag in f_authors for tag in authors]):
                     true_file = file.replace(".amdf", "")
                     result.append(true_file)
     return result
-
-    
-files = get_files_with_tags(["furry"], "folder/")
-for i in range(len(files)):
-    os.system("open " + str(files[i]))
